@@ -7,6 +7,7 @@ const UI = {
     SPRITES.drawIcon(document.getElementById('icon-book'), 'book');
     SPRITES.drawIcon(document.getElementById('icon-dex'), 'dex');
 
+    this.ensureSkipButton();
     this.bindEvents();
     this.renderMarket();
     this.updateAll();
@@ -17,17 +18,42 @@ const UI = {
       this.updateAll();
     }, 1000);
 
-    // 낚싯줄 및 찌 실시간 진동 애니메이션 루프 (약 20fps, 저사양 폰 최적화)
-    setInterval(() => {
+    // 낚싯줄 및 찌 부드러운 실시간 애니메이션 루프
+    const animateFishing = () => {
       if (STATE.isFishing) {
         const fiCanvas = document.getElementById('fishing-canvas');
         if (fiCanvas && document.getElementById('scene-fishing').classList.contains('active')) {
           SPRITES.drawFishing(fiCanvas.getContext('2d'), fiCanvas.width, fiCanvas.height, STATE);
         }
       }
-    }, 50);
+      requestAnimationFrame(animateFishing);
+    };
+    requestAnimationFrame(animateFishing);
   },
 
+  // HTML 캐시 여부와 무관하게 '밤으로' 건뛰 버튼 확실히 생성 및 연결
+  ensureSkipButton() {
+    let skipBtn = document.getElementById('btn-skip-day');
+    const timeBox = document.getElementById('time-display');
+    if (!skipBtn && timeBox) {
+      timeBox.style.flexDirection = 'row';
+      timeBox.style.gap = '6px';
+      skipBtn = document.createElement('button');
+      skipBtn.id = 'btn-skip-day';
+      skipBtn.className = 'pixel-btn small accent';
+      skipBtn.textContent = '밤으로';
+      timeBox.appendChild(skipBtn);
+    }
+    if (skipBtn && !skipBtn.dataset.bound) {
+      skipBtn.dataset.bound = 'true';
+      skipBtn.addEventListener('click', () => {
+        if (STATE.phase === 'day') {
+          STATE.switchPhase();
+          this.updateAll();
+        }
+      });
+    }
+  },
   showToast(msg) {
     const hint = document.getElementById('kitchen-hint');
     const farmText = document.getElementById('farm-status-text');
@@ -57,7 +83,7 @@ const UI = {
     const phaseName = STATE.phase === 'day' ? '낮' : '밤(영업중)';
     document.getElementById('phase-timer-text').textContent = `${phaseName} ${min}:${sec}`;
 
-    // 낮일 때만 '밤으로' 건너뛰기 버튼 표시
+    this.ensureSkipButton();
     const skipBtn = document.getElementById('btn-skip-day');
     if (skipBtn) {
       skipBtn.style.display = STATE.phase === 'day' ? 'inline-block' : 'none';
@@ -85,14 +111,6 @@ const UI = {
   },
 
   bindEvents() {
-    // 낮 건너뛰기 버튼 클릭 -> 즉시 밤(식당 영업)으로 전환
-    document.getElementById('btn-skip-day').addEventListener('click', () => {
-      if (STATE.phase === 'day') {
-        STATE.switchPhase();
-        this.updateAll();
-      }
-    });
-
     document.querySelectorAll('.nav-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
         this.switchScene(btn.dataset.target);
@@ -115,7 +133,6 @@ const UI = {
     document.getElementById('btn-encyclopedia').addEventListener('click', () => this.openEncyclopedia());
     document.getElementById('btn-close-modal').addEventListener('click', () => this.closeModal());
     document.getElementById('btn-open-ingredients').addEventListener('click', () => this.openIngredientModal());
-
     const kCanvas = document.getElementById('kitchen-canvas');
     kCanvas.addEventListener('click', (e) => {
       const pt = this.getCanvasCoords(kCanvas, e);
@@ -297,7 +314,7 @@ const UI = {
       return;
     }
 
-    const toolId = activeTools[0];
+    const toolId = activeTools;
     const usedIngs = [...STATE.cookingPotItems[toolId]].sort();
     STATE.cookingPotItems = {};
 
@@ -335,7 +352,7 @@ const UI = {
       const btn = document.createElement('button');
       btn.className = 'pixel-btn small';
       if (this.selectedDishIndex === idx) btn.classList.add('accent');
-      btn.textContent = `${dish.name} (${dish.tags[0]})`;
+      btn.textContent = `${dish.name} (${dish.tags})`;
       btn.addEventListener('click', () => {
         this.selectedDishIndex = idx;
         this.showToast(`[${dish.name}] 선택됨! 이제 원하는 손님을 터치하세요.`);
@@ -478,16 +495,26 @@ const UI = {
         const discovered = STATE.discoveredRecipes.includes(r.id);
         const card = document.createElement('div');
         card.className = 'hud-box';
-        card.style.flexDirection = 'column';
-        card.style.alignItems = 'flex-start';
+        card.style.flexDirection = 'row';
+        card.style.alignItems = 'center';
+        card.style.gap = '10px';
+
+        const dishCanvas = SPRITES.createDishCanvas(r.id, discovered, 44);
+        card.appendChild(dishCanvas);
+
+        const infoDiv = document.createElement('div');
+        infoDiv.style.display = 'flex';
+        infoDiv.style.flexDirection = 'column';
+        infoDiv.style.gap = '2px';
 
         if (discovered) {
           const toolName = GAME_DATA.tools[r.tool].name;
           const ingNames = r.ingredients.map((id) => GAME_DATA.items[id].name).join(' + ');
-          card.innerHTML = `<strong>${r.name} (${r.price} G)</strong><span>도구: ${toolName} | 재료: ${ingNames}</span><span>특징: ${r.tags.join(', ')}</span>`;
+          infoDiv.innerHTML = `<strong>${r.name} (${r.price} G)</strong><span>도구: ${toolName} | 재료: ${ingNames}</span><span>특징: ${r.tags.join(', ')}</span>`;
         } else {
-          card.innerHTML = `<strong>??? (미발견 레시피)</strong><span>힌트: [${r.tags[0]}] 속성의 요리</span>`;
+          infoDiv.innerHTML = `<strong>??? (미발견 레시피)</strong><span>힌트: [${r.tags}] 속성의 요리</span>`;
         }
+        card.appendChild(infoDiv);
         box.appendChild(card);
       });
     });
