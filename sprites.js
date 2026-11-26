@@ -1,48 +1,27 @@
 const SPRITES = {
   palette: {
     '.': null,
-    'K': '#120d0a', // 외곽선 검정
-    'W': '#ffffff', // 하이라이트 흰색
-    'Y': '#ffd43b', // 노랑
-    'A': '#f59f00', // 진노랑/황금색
-    'O': '#f76707', // 주황
-    'R': '#e03131', // 빨강
-    'M': '#a61e4d', // 진빨강/자주
-    'G': '#2f9e44', // 초록
-    'L': '#8ce99a', // 연두
-    'D': '#1b4332', // 짙은 녹색
-    'B': '#1971c2', // 파랑
-    'C': '#74c0fc', // 하늘색
-    'N': '#8d5524', // 갈색
-    'T': '#c68642', // 밝은 나무색
-    'E': '#4a2c11', // 진갈색
-    'S': '#adb5bd', // 은색
-    'H': '#495057', // 진회색
-    'P': '#fcc2d7'  // 분홍/피부색
+    'K': '#120d0a',
+    'W': '#ffffff',
+    'Y': '#ffd43b',
+    'A': '#f59f00',
+    'O': '#f76707',
+    'R': '#e03131',
+    'M': '#a61e4d',
+    'G': '#2f9e44',
+    'L': '#8ce99a',
+    'D': '#1b4332',
+    'B': '#1971c2',
+    'C': '#74c0fc',
+    'N': '#8d5524',
+    'T': '#c68642',
+    'E': '#4a2c11',
+    'S': '#adb5bd',
+    'H': '#495057',
+    'P': '#fcc2d7'
   },
 
-  // 16x16 정밀 도트 스프라이트 시트
   art16: {
-    // 정밀 낚싯대 (코르크 손잡이 + 황금 릴 + 휘어진 대나무 초릿대)
-    fishing_rod: [
-      '.............KKK',
-      '............KTTK',
-      '...........KTNK.',
-      '..........KTNK..',
-      '.........KTNK...',
-      '........KTNK....',
-      '.......KTNK.....',
-      '......KTNK......',
-      '.....KTNK.......',
-      '....KYYK........',
-      '...KAAYK........',
-      '..KTNK..........',
-      '.KTTK...........',
-      'KTTK............',
-      'KKK.............',
-      '................'
-    ],
-    // 닭 (16x16)
     chicken: [
       '......RR........',
       '.....RRRR.......',
@@ -61,7 +40,6 @@ const SPRITES = {
       '....YYY...YYY...',
       '................'
     ],
-    // 표고버섯 (16x16)
     mushroom: [
       '....KKKKKKKK....',
       '..KKNNNNNNNNKK..',
@@ -80,7 +58,6 @@ const SPRITES = {
       '................',
       '................'
     ],
-    // 다 자란 열매 작물 (16x16)
     crop_berry: [
       '......GGGG......',
       '....GGLLLLGG....',
@@ -99,7 +76,6 @@ const SPRITES = {
       '................',
       '................'
     ],
-    // 새싹 (16x16)
     sprout: [
       '................',
       '................',
@@ -118,7 +94,6 @@ const SPRITES = {
       '................',
       '................'
     ],
-    // 프라이팬 (16x16)
     tool_pan: [
       '....KKKKKKKK....',
       '..KKHHHHHHHHKK..',
@@ -137,7 +112,6 @@ const SPRITES = {
       '.......KNK......',
       '........K.......'
     ],
-    // 도마와 식칼 (16x16)
     tool_board: [
       '................',
       '.KKKKKKKKKKKKKK.',
@@ -156,7 +130,6 @@ const SPRITES = {
       '................',
       '................'
     ],
-    // 냄비 (16x16)
     tool_pot: [
       '.....W....W.....',
       '....W......W....',
@@ -175,7 +148,6 @@ const SPRITES = {
       '................',
       '................'
     ],
-    // 즙 짜는 기계 (16x16)
     tool_juicer: [
       '.....KKKKKK.....',
       '....KHHHHHHK....',
@@ -194,7 +166,6 @@ const SPRITES = {
       '................',
       '................'
     ],
-    // 튀김기 (16x16)
     tool_fryer: [
       '......KKKK......',
       '.....KHHHHK.....',
@@ -207,25 +178,6 @@ const SPRITES = {
       '.KSKKKKKKKKKKSK.',
       '.KSSSSSSSSSSSSK.',
       '..KKKKKKKKKKKK..',
-      '................',
-      '................',
-      '................',
-      '................',
-      '................'
-    ],
-    // 물고기 (16x16)
-    fish: [
-      '................',
-      '................',
-      '.....KKKKKK.....',
-      '...KKBBBBBBKK...',
-      '..KBBWBBBBBBBKK.',
-      '.KBBBBBBBBBBBBBK',
-      'KBBBBBBBBBBBBKK.',
-      '.KBBBBBBBBBBK...',
-      '..KKBBBBBBKK....',
-      '....KKKKKK......',
-      '................',
       '................',
       '................',
       '................',
@@ -645,7 +597,7 @@ const SPRITES = {
     }
   },
 
-  // 4. 낚시터 (16x16 정밀 낚싯대 + 갈대 풀숲 + 바위 + 물결 찌)
+  // 4. 낚시터 (정밀 도트 낚싯대 + 입질 시 낚싯줄과 찌 진동 애니메이션)
   drawFishing(ctx, w, h, state) {
     // 맑은 하늘과 구름
     ctx.fillStyle = '#74c0fc';
@@ -656,7 +608,7 @@ const SPRITES = {
     ctx.fillRect(340, 65, 110, 28);
     ctx.fillRect(365, 48, 60, 22);
 
-    // 강물
+    // 강물과 물결
     ctx.fillStyle = '#1971c2';
     ctx.fillRect(0, 210, w, h - 210);
     ctx.fillStyle = '#4dabf7';
@@ -667,7 +619,7 @@ const SPRITES = {
       }
     }
 
-    // 왼쪽 풀숲 & 바위 디테일
+    // 왼쪽 풀숲 & 바위
     ctx.fillStyle = '#2b8a3e';
     ctx.fillRect(0, 145, 70, 45);
     ctx.fillStyle = '#40c057';
@@ -691,43 +643,96 @@ const SPRITES = {
     ctx.lineWidth = 5;
     ctx.strokeRect(-4, 180, 209, 56);
 
-    // 부두 위에 놓인 정밀 16x16 낚싯대 (코르크 손잡이 + 황금 릴 + 대나무 초릿대)
+    // 낚시 중일 때 정밀 도트 낚싯대 & 낚싯줄 연출
     if (state.isFishing) {
-      this.drawPixelArt(ctx, 'fishing_rod', 135, 65, 8);
+      // 입질 시 좌우/상하 진동 값 계산
+      const shakeX = state.fishBite ? Math.sin(Date.now() / 45) * 10 : 0;
+      const shakeY = state.fishBite ? Math.abs(Math.cos(Date.now() / 45)) * 14 : Math.sin(Date.now() / 350) * 3;
 
-      const bobY = state.fishBite ? 395 : 375;
-      // 낚싯대 끝(263, 65)에서 찌까지 내려가는 낚싯줄
-      ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(263, 69);
-      ctx.lineTo(340, bobY);
-      ctx.stroke();
+      // 1) 코르크 손잡이 & 황금 릴 + 길게 뻗은 카본 낚싯대 (픽셀 계단형 정밀 렌더링)
+      const rodStartX = 115;
+      const rodStartY = 185;
+      const tipX = 290 + shakeX * 0.4;
+      const tipY = 55 + shakeY * 0.6;
 
-      // 수면 파동 고리
-      ctx.strokeStyle = '#a5d8ff';
-      ctx.lineWidth = 4;
-      ctx.strokeRect(312, bobY + 14, 56, 16);
-
-      // 빨간/흰색 투톤 찌
-      ctx.fillStyle = state.fishBite ? '#ffd43b' : '#e03131';
-      ctx.fillRect(328, bobY - 6, 24, 16);
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(328, bobY + 10, 24, 12);
+      // 코르크 그립
+      ctx.fillStyle = '#c68642';
+      ctx.fillRect(rodStartX - 8, rodStartY - 8, 28, 18);
       ctx.strokeStyle = '#120d0a';
       ctx.lineWidth = 4;
-      ctx.strokeRect(328, bobY - 6, 24, 28);
+      ctx.strokeRect(rodStartX - 8, rodStartY - 8, 28, 18);
 
-      if (state.fishBite) {
-        this.drawPixelArt(ctx, 'fish', 290, 435, 6);
+      // 낚싯대 본체 (픽셀 블록으로 계단식 곡선 표현)
+      const steps = 16;
+      for (let s = 0; s <= steps; s++) {
+        const t = s / steps;
+        // 끝부분이 살짝 휘어지는 포물선 궤적
+        const rx = Math.floor(rodStartX + 16 + (tipX - (rodStartX + 16)) * t);
+        const bend = state.fishBite ? t * t * 18 : t * t * 6;
+        const ry = Math.floor(rodStartY - 4 + (tipY - (rodStartY - 4)) * t + bend);
+        const thickness = s < 5 ? 10 : s < 11 ? 7 : 5;
+
         ctx.fillStyle = '#120d0a';
-        ctx.fillRect(115, 275, 310, 52);
-        ctx.fillStyle = '#ffd43b';
-        ctx.font = 'bold 28px Malgun Gothic, sans-serif';
-        ctx.fillText('입질 왔다! 화면 터치!', 130, 310);
+        ctx.fillRect(rx - 2, ry - 2, thickness + 4, thickness + 4);
+        ctx.fillStyle = s % 4 === 0 ? '#e03131' : '#343a40'; // 마디 포인트
+        ctx.fillRect(rx, ry, thickness, thickness);
+
+        // 가이드 고리 (은색 링)
+        if (s === 6 || s === 11 || s === 16) {
+          ctx.fillStyle = '#dee2e6';
+          ctx.fillRect(rx + 2, ry + thickness, 6, 6);
+        }
       }
+
+      // 황금 스피닝 릴
+      ctx.fillStyle = '#f59f00';
+      ctx.fillRect(rodStartX + 26, rodStartY - 2, 22, 24);
+      ctx.fillStyle = '#ffd43b';
+      ctx.fillRect(rodStartX + 30, rodStartY + 2, 14, 10);
+      ctx.strokeStyle = '#120d0a';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(rodStartX + 26, rodStartY - 2, 22, 24);
+
+      // 2) 낚싯줄 (입질이 오면 팽팽하게 직선으로 당겨지며 좌우로 떨림)
+      const bobX = 355 + shakeX;
+      const bobY = (state.fishBite ? 415 : 380) + shakeY;
+
+      ctx.strokeStyle = state.fishBite ? '#ffd43b' : '#ffffff';
+      ctx.lineWidth = state.fishBite ? 4 : 3;
+      ctx.beginPath();
+      ctx.moveTo(tipX + 4, tipY + 12);
+      if (state.fishBite) {
+        // 입질 시 팽팽하게 일직선으로 당겨짐
+        ctx.lineTo(bobX + 12, bobY);
+      } else {
+        // 평소에는 살짝 느슨한 곡선
+        ctx.quadraticCurveTo(tipX + 25, (tipY + bobY) / 2 + 25, bobX + 12, bobY);
+      }
+      ctx.stroke();
+
+      // 3) 수면 파동 고리 (입질 시 물보라 파동이 2겹으로 크게 퍼짐)
+      ctx.strokeStyle = state.fishBite ? '#ffffff' : '#a5d8ff';
+      ctx.lineWidth = 4;
+      if (state.fishBite) {
+        const ripple = (Date.now() % 400) / 10;
+        ctx.strokeRect(bobX - 24 - ripple * 0.5, bobY + 10, 72 + ripple, 20);
+        ctx.strokeRect(bobX - 10, bobY + 14, 44, 12);
+      } else {
+        ctx.strokeRect(bobX - 14, bobY + 14, 52, 14);
+      }
+
+      // 4) 빨간/흰색 투톤 찌 (입질 시 물속으로 반쯤 잠김)
+      const submerge = state.fishBite ? 10 : 0;
+      ctx.fillStyle = '#e03131';
+      ctx.fillRect(bobX, bobY - 6 + submerge, 24, 15);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(bobX, bobY + 9 + submerge, 24, 11 - submerge * 0.5);
+      ctx.strokeStyle = '#120d0a';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(bobX, bobY - 6 + submerge, 24, 26 - submerge * 0.5);
     }
 
+    // 통발 그래픽
     if (state.trapActive) {
       ctx.fillStyle = '#8d5524';
       ctx.fillRect(70, 500, 96, 64);
@@ -751,7 +756,6 @@ const SPRITES = {
     }
   },
 
-  // 5. 시장 상단 배너 (찌그러짐 없는 선명한 비율)
   drawMarketBanner(ctx, w, h, season) {
     ctx.fillStyle = '#e6ccb2';
     ctx.fillRect(0, 0, w, h);
