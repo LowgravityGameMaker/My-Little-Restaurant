@@ -130,19 +130,19 @@ const SPRITES = {
     ctx.fillStyle = '#8d5524';
     ctx.fillRect(0, 0, w, h);
     ctx.fillStyle = '#734218';
-    for (let y = 0; y < h; y += 32) {
-      ctx.fillRect(0, y, w, 4);
+    for (let y = 0; y < h; y += 48) {
+      ctx.fillRect(0, y, w, 6);
     }
 
     const tools = state.unlockedTools;
-    const slotW = 96;
-    const slotH = 96;
+    const slotW = 144;
+    const slotH = 144;
     const positions = [
-      { x: 24, y: 30 },
-      { x: 132, y: 30 },
-      { x: 240, y: 30 },
-      { x: 76, y: 165 },
-      { x: 188, y: 165 }
+      { x: 36, y: 45 },
+      { x: 198, y: 45 },
+      { x: 360, y: 45 },
+      { x: 114, y: 245 },
+      { x: 282, y: 245 }
     ];
 
     state.toolSlots = [];
@@ -155,69 +155,69 @@ const SPRITES = {
       ctx.fillStyle = '#2b211a';
       ctx.fillRect(pos.x, pos.y, slotW, slotH);
       ctx.strokeStyle = '#120d0a';
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 6;
       ctx.strokeRect(pos.x, pos.y, slotW, slotH);
 
       if (toolId === 'tool_pan') {
         ctx.fillStyle = '#495057';
-        ctx.fillRect(pos.x + 20, pos.y + 16, 56, 56);
+        ctx.fillRect(pos.x + 30, pos.y + 24, 84, 84);
         ctx.fillStyle = '#212529';
-        ctx.fillRect(pos.x + 28, pos.y + 24, 40, 40);
-        ctx.fillRect(pos.x + 44, pos.y + 72, 8, 20);
+        ctx.fillRect(pos.x + 42, pos.y + 36, 60, 60);
+        ctx.fillRect(pos.x + 66, pos.y + 108, 12, 30);
       } else if (toolId === 'tool_board') {
         ctx.fillStyle = '#deb887';
-        ctx.fillRect(pos.x + 16, pos.y + 20, 64, 56);
+        ctx.fillRect(pos.x + 24, pos.y + 30, 96, 84);
         ctx.fillStyle = '#adb5bd';
-        ctx.fillRect(pos.x + 52, pos.y + 28, 8, 36);
+        ctx.fillRect(pos.x + 78, pos.y + 42, 12, 54);
       } else if (toolId === 'tool_pot') {
         ctx.fillStyle = '#1971c2';
-        ctx.fillRect(pos.x + 20, pos.y + 20, 56, 56);
+        ctx.fillRect(pos.x + 30, pos.y + 30, 84, 84);
         ctx.fillStyle = '#74c0fc';
-        ctx.fillRect(pos.x + 28, pos.y + 28, 40, 40);
+        ctx.fillRect(pos.x + 42, pos.y + 42, 60, 60);
       } else if (toolId === 'tool_juicer') {
         ctx.fillStyle = '#f8f9fa';
-        ctx.fillRect(pos.x + 28, pos.y + 16, 40, 64);
+        ctx.fillRect(pos.x + 42, pos.y + 24, 60, 96);
         ctx.fillStyle = '#ffd43b';
-        ctx.fillRect(pos.x + 36, pos.y + 24, 24, 28);
+        ctx.fillRect(pos.x + 54, pos.y + 36, 36, 42);
       } else if (toolId === 'tool_fryer') {
         ctx.fillStyle = '#868e96';
-        ctx.fillRect(pos.x + 16, pos.y + 16, 64, 64);
+        ctx.fillRect(pos.x + 24, pos.y + 24, 96, 96);
         ctx.fillStyle = '#fcc419';
-        ctx.fillRect(pos.x + 24, pos.y + 24, 48, 48);
+        ctx.fillRect(pos.x + 36, pos.y + 36, 72, 72);
       }
 
       ctx.fillStyle = '#fff6e5';
-      ctx.font = '16px Galmuri9, sans-serif';
-      ctx.fillText(GAME_DATA.tools[toolId].name, pos.x + 4, pos.y + slotH + 20);
+      ctx.font = 'bold 24px Malgun Gothic, sans-serif';
+      ctx.fillText(GAME_DATA.tools[toolId].name, pos.x + 6, pos.y + slotH + 30);
 
       const inItems = state.cookingPotItems[toolId] || [];
       if (inItems.length > 0) {
         ctx.fillStyle = '#ffd43b';
-        ctx.fillRect(pos.x + 68, pos.y + 4, 24, 24);
+        ctx.fillRect(pos.x + 102, pos.y + 6, 36, 36);
         ctx.fillStyle = '#120d0a';
-        ctx.font = 'bold 16px Galmuri9, sans-serif';
-        ctx.fillText(String(inItems.length), pos.x + 75, pos.y + 22);
+        ctx.font = 'bold 24px Malgun Gothic, sans-serif';
+        ctx.fillText(String(inItems.length), pos.x + 112, pos.y + 33);
       }
     });
 
-    state.trashRect = { x: 24, y: h - 105, w: 84, h: 80 };
+    state.trashRect = { x: 36, y: h - 155, w: 130, h: 120 };
     ctx.fillStyle = '#495057';
-    ctx.fillRect(24, h - 105, 84, 80);
+    ctx.fillRect(36, h - 155, 130, 120);
     ctx.fillStyle = '#212529';
-    ctx.fillRect(32, h - 90, 68, 56);
+    ctx.fillRect(48, h - 135, 106, 84);
     ctx.fillStyle = '#ffffff';
-    ctx.font = '16px Galmuri9, sans-serif';
-    ctx.fillText('버리기', 42, h - 55);
+    ctx.font = 'bold 24px Malgun Gothic, sans-serif';
+    ctx.fillText('버리기', 65, h - 85);
 
-    state.cookBtnRect = { x: w - 132, y: h - 105, w: 108, h: 80 };
+    state.cookBtnRect = { x: w - 198, y: h - 155, w: 162, h: 120 };
     ctx.fillStyle = '#2f9e44';
-    ctx.fillRect(w - 132, h - 105, 108, 80);
+    ctx.fillRect(w - 198, h - 155, 162, 120);
     ctx.strokeStyle = '#120d0a';
-    ctx.lineWidth = 4;
-    ctx.strokeRect(w - 132, h - 105, 108, 80);
+    ctx.lineWidth = 6;
+    ctx.strokeRect(w - 198, h - 155, 162, 120);
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 18px Galmuri9, sans-serif';
-    ctx.fillText('요리시작', w - 116, h - 58);
+    ctx.font = 'bold 26px Malgun Gothic, sans-serif';
+    ctx.fillText('요리시작', w - 168, h - 85);
   },
   drawHall(ctx, w, h, state) {
     ctx.fillStyle = '#e9d8a6';
@@ -226,38 +226,38 @@ const SPRITES = {
     ctx.fillRect(0, h * 0.55, w, h * 0.45);
 
     ctx.fillStyle = '#4a2c11';
-    ctx.fillRect(0, h * 0.62, w, 36);
+    ctx.fillRect(0, h * 0.62, w, 54);
 
     state.customerRects = [];
     for (let i = 0; i < 3; i++) {
-      const cx = 32 + i * 110;
-      const cy = 140;
-      state.customerRects.push({ index: i, x: cx - 10, y: cy - 75, w: 96, h: 180 });
+      const cx = 48 + i * 165;
+      const cy = 210;
+      state.customerRects.push({ index: i, x: cx - 15, y: cy - 110, w: 144, h: 270 });
 
       const cust = state.customers[i];
       if (!cust) {
         ctx.fillStyle = '#3b2d24';
-        ctx.fillRect(cx + 16, cy + 56, 44, 32);
+        ctx.fillRect(cx + 24, cy + 84, 66, 48);
         continue;
       }
 
       ctx.fillStyle = cust.shirtColor;
-      ctx.fillRect(cx + 12, cy + 40, 52, 52);
+      ctx.fillRect(cx + 18, cy + 60, 78, 78);
       ctx.fillStyle = '#fcc2d7';
-      ctx.fillRect(cx + 18, cy + 8, 40, 36);
+      ctx.fillRect(cx + 27, cy + 12, 60, 54);
       ctx.fillStyle = '#120d0a';
-      ctx.fillRect(cx + 26, cy + 22, 6, 6);
-      ctx.fillRect(cx + 44, cy + 22, 6, 6);
+      ctx.fillRect(cx + 39, cy + 33, 9, 9);
+      ctx.fillRect(cx + 66, cy + 33, 9, 9);
 
       ctx.fillStyle = '#ffffff';
-      ctx.fillRect(cx - 10, cy - 68, 96, 48);
+      ctx.fillRect(cx - 15, cy - 102, 144, 72);
       ctx.strokeStyle = '#120d0a';
-      ctx.lineWidth = 4;
-      ctx.strokeRect(cx - 10, cy - 68, 96, 48);
+      ctx.lineWidth = 6;
+      ctx.strokeRect(cx - 15, cy - 102, 144, 72);
 
       ctx.fillStyle = '#120d0a';
-      ctx.font = 'bold 17px Galmuri9, sans-serif';
-      ctx.fillText(cust.wantTag, cx + 4, cy - 38);
+      ctx.font = 'bold 25px Malgun Gothic, sans-serif';
+      ctx.fillText(cust.wantTag, cx + 6, cy - 56);
     }
   },
 
@@ -265,64 +265,64 @@ const SPRITES = {
     ctx.fillStyle = '#40916c';
     ctx.fillRect(0, 0, w, h);
 
-    state.coopRect = { x: 16, y: 30, w: 96, h: 140 };
+    state.coopRect = { x: 24, y: 40, w: 144, h: 200 };
     ctx.fillStyle = '#a47148';
-    ctx.fillRect(16, 30, 96, 140);
+    ctx.fillRect(24, 40, 144, 200);
     ctx.strokeStyle = '#120d0a';
-    ctx.lineWidth = 4;
-    ctx.strokeRect(16, 30, 96, 140);
+    ctx.lineWidth = 6;
+    ctx.strokeRect(24, 40, 144, 200);
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 16px Galmuri9, sans-serif';
-    ctx.fillText('닭장', 46, 58);
-    ctx.font = '15px Galmuri9, sans-serif';
-    ctx.fillText(`닭:${state.chickens}마리`, 24, 92);
+    ctx.font = 'bold 24px Malgun Gothic, sans-serif';
+    ctx.fillText('닭장', 70, 82);
+    ctx.font = 'bold 22px Malgun Gothic, sans-serif';
+    ctx.fillText(`닭:${state.chickens}마리`, 38, 135);
     ctx.fillStyle = '#ffd43b';
-    ctx.fillText(`알:${state.eggsReady}개`, 28, 126);
+    ctx.fillText(`알:${state.eggsReady}개`, 42, 185);
 
-    state.mushroomRect = { x: w - 112, y: 30, w: 96, h: 140 };
+    state.mushroomRect = { x: w - 168, y: 40, w: 144, h: 200 };
     ctx.fillStyle = '#2d3a3a';
-    ctx.fillRect(w - 112, 30, 96, 140);
+    ctx.fillRect(w - 168, 40, 144, 200);
     ctx.strokeStyle = '#120d0a';
-    ctx.strokeRect(w - 112, 30, 96, 140);
+    ctx.strokeRect(w - 168, 40, 144, 200);
     ctx.fillStyle = '#e9ecef';
-    ctx.font = 'bold 16px Galmuri9, sans-serif';
-    ctx.fillText('버섯그늘', w - 98, 58);
-    ctx.font = '15px Galmuri9, sans-serif';
-    ctx.fillText(`키트:${state.mushroomKits}`, w - 98, 92);
+    ctx.font = 'bold 24px Malgun Gothic, sans-serif';
+    ctx.fillText('버섯그늘', w - 144, 82);
+    ctx.font = 'bold 22px Malgun Gothic, sans-serif';
+    ctx.fillText(`키트:${state.mushroomKits}`, w - 144, 135);
     if (state.mushroomsReady > 0) {
       ctx.fillStyle = '#ffd43b';
-      ctx.fillText(`수확:${state.mushroomsReady}`, w - 98, 126);
+      ctx.fillText(`수확:${state.mushroomsReady}`, w - 144, 185);
     }
 
     const gridSize = state.farmExpanded ? 4 : 3;
-    const cellSize = state.farmExpanded ? 54 : 68;
-    const startX = Math.floor((w - gridSize * (cellSize + 8)) / 2);
-    const startY = 200;
+    const cellSize = state.farmExpanded ? 82 : 102;
+    const startX = Math.floor((w - gridSize * (cellSize + 12)) / 2);
+    const startY = 280;
 
     state.farmCellRects = [];
     for (let r = 0; r < gridSize; r++) {
       for (let c = 0; c < gridSize; c++) {
         const idx = r * gridSize + c;
-        const x = startX + c * (cellSize + 8);
-        const y = startY + r * (cellSize + 8);
+        const x = startX + c * (cellSize + 12);
+        const y = startY + r * (cellSize + 12);
         state.farmCellRects.push({ idx, x, y, w: cellSize, h: cellSize });
 
         const plot = state.farmPlots[idx];
         ctx.fillStyle = plot ? '#5c3a21' : '#7f4f24';
         ctx.fillRect(x, y, cellSize, cellSize);
         ctx.strokeStyle = '#120d0a';
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 4;
         ctx.strokeRect(x, y, cellSize, cellSize);
 
         if (plot) {
           if (plot.ready) {
             ctx.fillStyle = '#2f9e44';
-            ctx.fillRect(x + 16, y + 8, cellSize - 32, 12);
+            ctx.fillRect(x + 24, y + 12, cellSize - 48, 18);
             ctx.fillStyle = '#ff6b6b';
-            ctx.fillRect(x + 12, y + 20, cellSize - 24, cellSize - 28);
+            ctx.fillRect(x + 18, y + 30, cellSize - 36, cellSize - 42);
           } else {
             ctx.fillStyle = '#8ce99a';
-            ctx.fillRect(x + cellSize / 2 - 6, y + cellSize / 2 - 6, 12, 12);
+            ctx.fillRect(x + cellSize / 2 - 9, y + cellSize / 2 - 9, 18, 18);
           }
         }
       }
@@ -331,38 +331,38 @@ const SPRITES = {
 
   drawFishing(ctx, w, h, state) {
     ctx.fillStyle = '#74c0fc';
-    ctx.fillRect(0, 0, w, 150);
+    ctx.fillRect(0, 0, w, 210);
     ctx.fillStyle = '#1971c2';
-    ctx.fillRect(0, 150, w, h - 150);
+    ctx.fillRect(0, 210, w, h - 210);
 
     ctx.fillStyle = '#8d5524';
-    ctx.fillRect(0, 130, 130, 44);
+    ctx.fillRect(0, 185, 195, 66);
 
     if (state.isFishing) {
-      const bobY = state.fishBite ? 264 : 250;
+      const bobY = state.fishBite ? 390 : 370;
       ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 3;
+      ctx.lineWidth = 5;
       ctx.beginPath();
-      ctx.moveTo(120, 136);
-      ctx.lineTo(210, bobY);
+      ctx.moveTo(180, 195);
+      ctx.lineTo(315, bobY);
       ctx.stroke();
 
       ctx.fillStyle = state.fishBite ? '#ffd43b' : '#e03131';
-      ctx.fillRect(204, bobY, 14, 14);
+      ctx.fillRect(305, bobY, 22, 22);
 
       if (state.fishBite) {
         ctx.fillStyle = '#ffd43b';
-        ctx.font = 'bold 20px Galmuri9, sans-serif';
-        ctx.fillText('입질 왔다! 화면 터치!', 110, 220);
+        ctx.font = 'bold 30px Malgun Gothic, sans-serif';
+        ctx.fillText('입질 왔다! 화면 터치!', 150, 320);
       }
     }
 
     if (state.trapActive) {
       ctx.fillStyle = '#495057';
-      ctx.fillRect(50, 350, 48, 34);
+      ctx.fillRect(75, 500, 72, 50);
       ctx.fillStyle = state.trapReady ? '#ffd43b' : '#ffffff';
-      ctx.font = 'bold 16px Galmuri9, sans-serif';
-      ctx.fillText(state.trapReady ? '통발 수확 가능!' : '통발 대기중...', 26, 410);
+      ctx.font = 'bold 24px Malgun Gothic, sans-serif';
+      ctx.fillText(state.trapReady ? '통발 수확 가능!' : '통발 대기중...', 40, 590);
     }
   },
 
@@ -370,14 +370,14 @@ const SPRITES = {
     ctx.fillStyle = '#d4a373';
     ctx.fillRect(0, 0, w, h);
 
-    for (let x = 0; x < w; x += 40) {
-      ctx.fillStyle = (x / 40) % 2 === 0 ? '#e03131' : '#fff9db';
-      ctx.fillRect(x, 0, 40, 56);
+    for (let x = 0; x < w; x += 60) {
+      ctx.fillStyle = (x / 60) % 2 === 0 ? '#e03131' : '#fff9db';
+      ctx.fillRect(x, 0, 60, 75);
     }
     ctx.fillStyle = '#120d0a';
-    ctx.font = 'bold 20px Galmuri9, sans-serif';
-    ctx.fillText(`[${season} 시장 가판대]`, 92, 98);
-    ctx.font = '15px Galmuri9, sans-serif';
-    ctx.fillText('원하는 물품을 터치해 구매하세요', 66, 130);
+    ctx.font = 'bold 28px Malgun Gothic, sans-serif';
+    ctx.fillText(`[${season} 시장 가판대]`, 145, 135);
+    ctx.font = 'bold 21px Malgun Gothic, sans-serif';
+    ctx.fillText('원하는 물품을 터치해 구매하세요', 110, 180);
   }
 };
