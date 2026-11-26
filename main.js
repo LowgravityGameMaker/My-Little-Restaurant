@@ -1,10 +1,8 @@
-
 const UI = {
-  selectedIngredient: null, // 조리도구에 넣기 위해 선택한 재료 ID
-  selectedDishIndex: null,  // 손님에게 서빙하기 위해 선택한 완성 요리 인덱스
+  selectedIngredient: null,
+  selectedDishIndex: null,
 
   init() {
-    // 상단 도트 아이콘 렌더링
     SPRITES.drawIcon(document.getElementById('icon-coin'), 'coin');
     SPRITES.drawIcon(document.getElementById('icon-book'), 'book');
     SPRITES.drawIcon(document.getElementById('icon-dex'), 'dex');
@@ -13,11 +11,21 @@ const UI = {
     this.renderMarket();
     this.updateAll();
 
-    // 1초 게임 루프 시작
+    // 1초 게임 시간 루프
     setInterval(() => {
       STATE.tick();
       this.updateAll();
     }, 1000);
+
+    // 낚싯줄 및 찌 실시간 진동 애니메이션 루프 (약 20fps, 저사양 폰 최적화)
+    setInterval(() => {
+      if (STATE.isFishing) {
+        const fiCanvas = document.getElementById('fishing-canvas');
+        if (fiCanvas && document.getElementById('scene-fishing').classList.contains('active')) {
+          SPRITES.drawFishing(fiCanvas.getContext('2d'), fiCanvas.width, fiCanvas.height, STATE);
+        }
+      }
+    }, 50);
   },
 
   showToast(msg) {
@@ -41,7 +49,6 @@ const UI = {
   },
 
   updateAll() {
-    // 상단 재화 및 시간 텍스트 갱신
     document.getElementById('money-text').textContent = `${STATE.money} G`;
     document.getElementById('season-day-text').textContent = `${STATE.currentSeason} ${STATE.day}일차`;
 
@@ -49,6 +56,12 @@ const UI = {
     const sec = String(STATE.timeLeft % 60).padStart(2, '0');
     const phaseName = STATE.phase === 'day' ? '낮' : '밤(영업중)';
     document.getElementById('phase-timer-text').textContent = `${phaseName} ${min}:${sec}`;
+
+    // 낮일 때만 '밤으로' 건너뛰기 버튼 표시
+    const skipBtn = document.getElementById('btn-skip-day');
+    if (skipBtn) {
+      skipBtn.style.display = STATE.phase === 'day' ? 'inline-block' : 'none';
+    }
 
     this.updateCanvases();
     this.renderServingTray();
@@ -72,14 +85,20 @@ const UI = {
   },
 
   bindEvents() {
-    // 하단 장소 이동 버튼
+    // 낮 건너뛰기 버튼 클릭 -> 즉시 밤(식당 영업)으로 전환
+    document.getElementById('btn-skip-day').addEventListener('click', () => {
+      if (STATE.phase === 'day') {
+        STATE.switchPhase();
+        this.updateAll();
+      }
+    });
+
     document.querySelectorAll('.nav-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
         this.switchScene(btn.dataset.target);
       });
     });
 
-    // 식당: 조리대 <-> 홀(서빙 벨) 전환
     document.getElementById('btn-ring-bell').addEventListener('click', () => {
       document.getElementById('kitchen-view').classList.remove('active');
       document.getElementById('hall-view').classList.add('active');
@@ -92,19 +111,15 @@ const UI = {
       this.updateCanvases();
     });
 
-    // 상단 아이콘: 레시피북 & 도감
     document.getElementById('btn-recipe-book').addEventListener('click', () => this.openRecipeBook());
     document.getElementById('btn-encyclopedia').addEventListener('click', () => this.openEncyclopedia());
     document.getElementById('btn-close-modal').addEventListener('click', () => this.closeModal());
-
-    // 식당: 재료 꺼내기 버튼
     document.getElementById('btn-open-ingredients').addEventListener('click', () => this.openIngredientModal());
-    // 조리대 캔버스 터치 (도구에 재료 투입, 요리 시작, 쓰레기통)
+
     const kCanvas = document.getElementById('kitchen-canvas');
     kCanvas.addEventListener('click', (e) => {
       const pt = this.getCanvasCoords(kCanvas, e);
 
-      // 1. 조리도구 슬롯 클릭 시 선택한 재료 넣기
       for (const slot of STATE.toolSlots) {
         if (this.inRect(pt, slot)) {
           if (this.selectedIngredient) {
@@ -130,7 +145,6 @@ const UI = {
         }
       }
 
-      // 2. 쓰레기통 클릭 시 조리대 위 재료 비우기
       if (STATE.trashRect && this.inRect(pt, STATE.trashRect)) {
         STATE.cookingPotItems = {};
         this.selectedIngredient = null;
@@ -139,13 +153,11 @@ const UI = {
         return;
       }
 
-      // 3. 요리 시작 버튼 클릭
       if (STATE.cookBtnRect && this.inRect(pt, STATE.cookBtnRect)) {
         this.tryCook();
       }
     });
 
-    // 식당 홀 캔버스 터치 (완성된 요리를 손님에게 서빙)
     const hCanvas = document.getElementById('hall-canvas');
     hCanvas.addEventListener('click', (e) => {
       const pt = this.getCanvasCoords(hCanvas, e);
@@ -160,7 +172,6 @@ const UI = {
           const dish = STATE.cookedDishes[this.selectedDishIndex];
           if (!dish) return;
 
-          // 요구 태그 일치 여부 확인
           if (dish.tags.includes(cust.wantTag)) {
             STATE.money += dish.price;
             this.showToast(`대성공! [${dish.name}] 서빙 완료 (+${dish.price} G)`);
@@ -175,18 +186,15 @@ const UI = {
         }
       }
     });
-    // 밭 캔버스 터치 (닭장, 버섯 그늘, 밭 타일)
     const fCanvas = document.getElementById('farm-canvas');
     fCanvas.addEventListener('click', (e) => {
       const pt = this.getCanvasCoords(fCanvas, e);
 
-      // 닭장 클릭
       if (STATE.coopRect && this.inRect(pt, STATE.coopRect)) {
         this.openCoopModal();
         return;
       }
 
-      // 버섯 그늘 클릭
       if (STATE.mushroomRect && this.inRect(pt, STATE.mushroomRect)) {
         if (STATE.mushroomKits <= 0) {
           this.showToast('시장에서 [버섯 재배 키트]를 먼저 구매하세요!');
@@ -202,7 +210,6 @@ const UI = {
         return;
       }
 
-      // 밭 타일 클릭
       for (const cell of STATE.farmCellRects) {
         if (this.inRect(pt, cell)) {
           const plot = STATE.farmPlots[cell.idx];
@@ -223,7 +230,6 @@ const UI = {
       }
     });
 
-    // 낚시터 버튼 및 캔버스 클릭
     document.getElementById('btn-cast-rod').addEventListener('click', () => {
       if (STATE.isFishing) {
         STATE.isFishing = false;
@@ -232,7 +238,7 @@ const UI = {
       } else {
         STATE.isFishing = true;
         STATE.fishBite = false;
-        STATE.fishTimer = Math.floor(Math.random() * 5) + 3; // 3~7초 뒤 입질
+        STATE.fishTimer = Math.floor(Math.random() * 5) + 3;
         this.showToast('찌를 던졌습니다. 입질을 기다리세요!');
       }
       this.updateAll();
@@ -275,7 +281,7 @@ const UI = {
       this.updateAll();
     });
   },
-  // 조리 판정 로직
+
   tryCook() {
     if (STATE.cookedDishes.length >= 3) {
       this.showToast('서빙 쟁반이 가득 찼습니다! 먼저 손님에게 서빙하거나 버리세요.');
@@ -295,7 +301,6 @@ const UI = {
     const usedIngs = [...STATE.cookingPotItems[toolId]].sort();
     STATE.cookingPotItems = {};
 
-    // 레시피 일치 검색
     const matched = GAME_DATA.recipes.find((r) => {
       if (r.tool !== toolId) return false;
       const reqSorted = [...r.ingredients].sort();
@@ -316,15 +321,10 @@ const UI = {
     this.updateAll();
   },
 
-  // 홀 하단 서빙 쟁반 UI 렌더링
   renderServingTray() {
     const tray = document.getElementById('serving-tray');
     if (!tray) return;
     tray.innerHTML = '';
-    tray.style.display = 'flex';
-    tray.style.gap = '6px';
-    tray.style.width = '100%';
-    tray.style.justifyContent = 'center';
 
     if (STATE.cookedDishes.length === 0) {
       tray.innerHTML = '<span style="font-size:11px;color:#cbbba8;">완성된 요리가 없습니다</span>';
@@ -344,8 +344,6 @@ const UI = {
       tray.appendChild(btn);
     });
   },
-
-  // 모달 관련 함수들
   openModal(title, buildFn) {
     document.getElementById('modal-title').textContent = title;
     const content = document.getElementById('modal-content');
@@ -432,6 +430,7 @@ const UI = {
       });
     });
   },
+
   openCoopModal() {
     this.openModal('닭장 관리', (box) => {
       const info = document.createElement('p');
@@ -579,7 +578,6 @@ const UI = {
     });
   },
 
-  // 유틸리티 함수
   getCanvasCoords(canvas, event) {
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
