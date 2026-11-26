@@ -132,7 +132,6 @@ canvas {
   display: flex;
 }
 
-/* 캔버스가 화면 높이를 넘지 않도록 가두는 상자 */
 .canvas-box {
   width: 100%;
   flex: 1;
@@ -151,9 +150,11 @@ canvas {
   object-fit: contain;
 }
 
+/* 시장 상단 배너 비율 고정 (찌그러짐 완벽 방지) */
 #market-canvas {
   width: 100%;
-  height: 95px;
+  height: auto;
+  aspect-ratio: 540 / 210;
   flex-shrink: 0;
   border: 3px solid #120d0a;
 }
