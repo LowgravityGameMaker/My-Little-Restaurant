@@ -1,1 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>도트 사계절 식당</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="game-wrapper">
+    <!-- 상단 고정 UI: 왼쪽 재화, 중앙 계절/시간, 오른쪽 도감 버튼 -->
+    <header id="top-bar">
+      <div class="hud-box" id="money-display">
+        <canvas id="icon-coin" width="16" height="16" class="pixel-icon"></canvas>
+        <span id="money-text">500 G</span>
+      </div>
+      <div class="hud-box" id="time-display">
+        <span id="season-day-text">봄 1일차</span>
+        <span id="phase-timer-text">낮 10:00</span>
+      </div>
+      <div id="top-right-icons">
+        <button class="icon-btn" id="btn-recipe-book" title="레시피북">
+          <canvas id="icon-book" width="16" height="16" class="pixel-icon"></canvas>
+        </button>
+        <button class="icon-btn" id="btn-encyclopedia" title="도감">
+          <canvas id="icon-dex" width="16" height="16" class="pixel-icon"></canvas>
+        </button>
+      </div>
+    </header>
 
+    <!-- 메인 게임 캔버스 및 인터랙션 영역 -->
+    <main id="viewport">
+      <!-- 1. 식당 영역 -->
+      <section id="scene-restaurant" class="scene active">
+        <!-- 조리대 화면 (위에서 아래로 본 시점) -->
+        <div id="kitchen-view" class="sub-view active">
+          <div id="kitchen-top-controls">
+            <button id="btn-open-ingredients" class="pixel-btn">재료 꺼내기</button>
+            <button id="btn-ring-bell" class="pixel-btn accent">서빙 벨</button>
+          </div>
+          <canvas id="kitchen-canvas" width="180" height="240"></canvas>
+          <div id="kitchen-hint">재료를 드래그해 조리도구에 넣으세요</div>
+        </div>
+
+        <!-- 식당 홀 전체 화면 (손님 응대) -->
+        <div id="hall-view" class="sub-view">
+          <div id="hall-top-controls">
+            <button id="btn-back-kitchen" class="pixel-btn">조리대로 돌아가기</button>
+          </div>
+          <canvas id="hall-canvas" width="180" height="240"></canvas>
+          <div id="serving-tray">
+            <!-- 완성된 요리가 놓이는 자리 -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. 밭 영역 -->
+      <section id="scene-farm" class="scene">
+        <canvas id="farm-canvas" width="180" height="260"></canvas>
+        <div id="farm-controls" class="bottom-overlay-bar">
+          <span id="farm-status-text">밭, 닭장, 버섯 그늘을 터치하세요</span>
+        </div>
+      </section>
+
+      <!-- 3. 낚시터 영역 -->
+      <section id="scene-fishing" class="scene">
+        <canvas id="fishing-canvas" width="180" height="260"></canvas>
+        <div id="fishing-controls" class="bottom-overlay-bar">
+          <button id="btn-cast-rod" class="pixel-btn">낚싯대 던지기</button>
+          <button id="btn-set-trap" class="pixel-btn">통발 설치/확인</button>
+        </div>
+      </section>
+
+      <!-- 4. 시장 영역 -->
+      <section id="scene-market" class="scene">
+        <canvas id="market-canvas" width="180" height="100"></canvas>
+        <div id="market-stalls" class="scroll-grid">
+          <!-- 상점 가판대 품목 동적 생성 -->
+        </div>
+      </section>
+    </main>
+
+    <!-- 하단 장소 이동 내비게이션 -->
+    <nav id="bottom-nav">
+      <button class="nav-btn active" data-target="restaurant">식당</button>
+      <button class="nav-btn" data-target="farm">뒷밭</button>
+      <button class="nav-btn" data-target="fishing">낚시터</button>
+      <button class="nav-btn" data-target="market">시장</button>
+    </nav>
+
+    <!-- 팝업 모달 (재료창, 레시피북, 도감, 닭장 선택 등) -->
+    <div id="modal-overlay" class="hidden">
+      <div id="modal-box">
+        <div id="modal-header">
+          <span id="modal-title">창 제목</span>
+          <button id="btn-close-modal" class="pixel-btn small">X</button>
+        </div>
+        <div id="modal-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 순차 로드될 JS 모듈들 -->
+  <script src="data.js"></script>
+  <script src="sprites.js"></script>
+  <script src="state.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
