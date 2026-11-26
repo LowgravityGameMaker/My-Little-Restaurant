@@ -21,6 +21,247 @@ const SPRITES = {
     'P': '#fcc2d7'
   },
 
+  // 12x12 요리 도트 스프라이트 (레시피북 실루엣 & 해금 이미지용)
+  dishes: {
+    fried_egg: [
+      '....KKKK....',
+      '..KKWWWWKK..',
+      '.KWWWWWWWWK.',
+      'KWWWYYYYWWWK',
+      'KWWYYYYYYWWK',
+      'KWWYYWWYYWWK',
+      'KWWYYYYYYWWK',
+      '.KWWWWWWWWK.',
+      '..KKWWWWKK..',
+      '....KKKK....',
+      '............',
+      '............'
+    ],
+    roast_chicken: [
+      '....KKKK....',
+      '..KKOOOOKK..',
+      '.KOOAAAAOOK.',
+      'KOOAAWWAAOOK',
+      'KOOOOOOOOOOK',
+      '.KOOOOOOOOK.',
+      '..KKNNNNKK..',
+      '....KWWK....',
+      '....KWWK....',
+      '.....KK.....',
+      '............',
+      '............'
+    ],
+    grilled_corn: [
+      '....KKKK....',
+      '...KYYYYK...',
+      '..KYAYAYYK..',
+      '..KYYYYYYK..',
+      '..KYAYAYYK..',
+      '..KYYYYYYK..',
+      '..KGGGGGGK..',
+      '...KGLLGK...',
+      '....KKKK....',
+      '............',
+      '............',
+      '............'
+    ],
+    baked_sweetpotato: [
+      '.....KK.....',
+      '...KKMMKK...',
+      '..KMMMMMMK..',
+      '.KMMYYYYMMK.',
+      'KMMYYYYYYMMK',
+      'KMMYYYYYYMMK',
+      '.KMMYYYYMMK.',
+      '..KKMMMMKK..',
+      '....KKKK....',
+      '............',
+      '............',
+      '............'
+    ],
+    fresh_salad: [
+      '....KKKK....',
+      '..KKLLLLKK..',
+      '.KLGGRRGGLLK',
+      'KLGGRRRRGGLL',
+      'KGGGGGGGGGGK',
+      '.KWWWWWWWWK.',
+      '..KSSSSSSK..',
+      '...KKKKKK...',
+      '............',
+      '............',
+      '............',
+      '............'
+    ],
+    turnip_pickles: [
+      '....KKKK....',
+      '...KGGGGK...',
+      '..KPPPPPPK..',
+      '.KPPWWWWPPK.',
+      '.KPWWWWWWPK.',
+      '.KPWWPPWWPK.',
+      '..KPPPPPPK..',
+      '...KKKKKK...',
+      '............',
+      '............',
+      '............',
+      '............'
+    ],
+    strawberry_milk: [
+      '......KK....',
+      '.....KRRK...',
+      '...KKKKKKKK.',
+      '...KWWWWWWK.',
+      '...KPPPPPPK.',
+      '...KPPRRPPK.',
+      '...KPPPPPPK.',
+      '...KPPPPPPK.',
+      '....KKKKKK..',
+      '............',
+      '............',
+      '............'
+    ],
+    tomato_juice: [
+      '......KK....',
+      '.....KGGK...',
+      '...KKKKKKKK.',
+      '...KRRRRRRK.',
+      '...KRRWRRRK.',
+      '...KRRRRRRK.',
+      '...KRRRRRRK.',
+      '...KRRRRRRK.',
+      '....KKKKKK..',
+      '............',
+      '............',
+      '............'
+    ],
+    pumpkin_soup: [
+      '.....W..W...',
+      '....W....W..',
+      '..KKKKKKKK..',
+      '.KOOOOOOOOK.',
+      'KOOYYYYYYOOK',
+      'KOOOOOOOOOOK',
+      '.KWWWWWWWWK.',
+      '..KSSSSSSK..',
+      '...KKKKKK...',
+      '............',
+      '............',
+      '............'
+    ],
+    mushroom_stew: [
+      '.....W..W...',
+      '....W....W..',
+      '..KKKKKKKK..',
+      '.KNNNNNNNNK.',
+      'KNNTTNNTTNNK',
+      'KNNNNNNNNNNK',
+      '.KHHHHHHHHK.',
+      '..KSSSSSSK..',
+      '...KKKKKK...',
+      '............',
+      '............',
+      '............'
+    ],
+    fish_soup: [
+      '.....W..W...',
+      '....W....W..',
+      '..KKKKKKKK..',
+      '.KRRRRRRRRK.',
+      'KRRBBBBBBBRK',
+      'KRRRRRRRRRRK',
+      '.KHHHHHHHHK.',
+      '..KSSSSSSK..',
+      '...KKKKKK...',
+      '............',
+      '............',
+      '............'
+    ],
+    crab_soup: [
+      '.....W..W...',
+      '....W....W..',
+      '..KKKKKKKK..',
+      '.KCCCCCCCCK.',
+      'KCCOOOOOOCCK',
+      'KCCCCCCCCCCK',
+      '.KWWWWWWWWK.',
+      '..KSSSSSSK..',
+      '...KKKKKK...',
+      '............',
+      '............',
+      '............'
+    ],
+    fried_shrimp: [
+      '.....KK.....',
+      '...KKAAKK...',
+      '..KAAYYAAK..',
+      '.KAAYYYYAAK.',
+      '.KAAYKKYAAK.',
+      '..KK....KRRK',
+      '........KRRK',
+      '.........KK.',
+      '............',
+      '............',
+      '............',
+      '............'
+    ],
+    fried_smelt: [
+      '......KK....',
+      '....KKAAKK..',
+      '..KKAAYYAAKK',
+      '.KAAYYYYYYAK',
+      'KAAYYYYYYAAK',
+      '.KKAAYYYYAK.',
+      '...KKAAAAK..',
+      '.....KKKK...',
+      '............',
+      '............',
+      '............',
+      '............'
+    ],
+    fried_chicken: [
+      '...KKKKKK...',
+      '.KKAAAAAAKK.',
+      'KAAYYYYYYAAK',
+      'KAYAYAYAYAAK',
+      'KAAYYYYYYAAK',
+      '.KKAAAAAAKK.',
+      '..KWWWWWWK..',
+      '...KKKKKK...',
+      '............',
+      '............',
+      '............',
+      '............'
+    ]
+  },
+
+  // 레시피북용 요리 도트 캔버스 생성 (isUnlocked가 false면 검은 실루엣으로 렌더링!)
+  createDishCanvas(recipeId, isUnlocked, size = 40) {
+    const c = document.createElement('canvas');
+    c.width = size;
+    c.height = size;
+    c.style.width = `${size}px`;
+    c.style.height = `${size}px`;
+    c.style.flexShrink = '0';
+    c.style.backgroundColor = '#261c16';
+    c.style.border = '2px solid #120d0a';
+
+    const ctx = c.getContext('2d');
+    const map = this.dishes[recipeId] || this.dishes.fried_egg;
+    const scale = Math.floor(size / 12);
+    const offset = Math.floor((size - scale * 12) / 2);
+
+    for (let y = 0; y < 12; y++) {
+      for (let x = 0; x < 12; x++) {
+        const ch = map[y][x];
+        if (ch !== '.') {
+          ctx.fillStyle = isUnlocked ? (this.palette[ch] || '#ffffff') : '#120d0a';
+          ctx.fillRect(offset + x * scale, offset + y * scale, scale, scale);
+        }
+      }
+    }
+    return c;
+  },
   art16: {
     chicken: [
       '......RR........',
@@ -278,6 +519,7 @@ const SPRITES = {
       }
     }
   },
+
   drawIcon(canvas, iconName) {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -404,7 +646,6 @@ const SPRITES = {
     ctx.font = 'bold 26px Malgun Gothic, sans-serif';
     ctx.fillText('요리시작', w - 172, h - 88);
   },
-
   drawHall(ctx, w, h, state) {
     ctx.fillStyle = '#f4e4c1';
     ctx.fillRect(0, 0, w, h * 0.56);
@@ -489,6 +730,7 @@ const SPRITES = {
     ctx.lineWidth = 6;
     ctx.strokeRect(-4, h * 0.58, w + 8, 65);
   },
+
   drawFarm(ctx, w, h, state) {
     ctx.fillStyle = '#52b788';
     ctx.fillRect(0, 0, w, h);
@@ -596,10 +838,7 @@ const SPRITES = {
       }
     }
   },
-
-  // 4. 낚시터 (정밀 도트 낚싯대 + 입질 시 낚싯줄과 찌 진동 애니메이션)
   drawFishing(ctx, w, h, state) {
-    // 맑은 하늘과 구름
     ctx.fillStyle = '#74c0fc';
     ctx.fillRect(0, 0, w, 210);
     ctx.fillStyle = '#ffffff';
@@ -608,7 +847,6 @@ const SPRITES = {
     ctx.fillRect(340, 65, 110, 28);
     ctx.fillRect(365, 48, 60, 22);
 
-    // 강물과 물결
     ctx.fillStyle = '#1971c2';
     ctx.fillRect(0, 210, w, h - 210);
     ctx.fillStyle = '#4dabf7';
@@ -619,7 +857,6 @@ const SPRITES = {
       }
     }
 
-    // 왼쪽 풀숲 & 바위
     ctx.fillStyle = '#2b8a3e';
     ctx.fillRect(0, 145, 70, 45);
     ctx.fillStyle = '#40c057';
@@ -631,7 +868,6 @@ const SPRITES = {
     ctx.lineWidth = 4;
     ctx.strokeRect(195, 195, 45, 30);
 
-    // 나무 부두와 말뚝 기둥
     ctx.fillStyle = '#5c3a21';
     ctx.fillRect(35, 230, 24, 65);
     ctx.fillRect(155, 230, 24, 65);
@@ -643,48 +879,41 @@ const SPRITES = {
     ctx.lineWidth = 5;
     ctx.strokeRect(-4, 180, 209, 56);
 
-    // 낚시 중일 때 정밀 도트 낚싯대 & 낚싯줄 연출
     if (state.isFishing) {
-      // 입질 시 좌우/상하 진동 값 계산
-      const shakeX = state.fishBite ? Math.sin(Date.now() / 45) * 10 : 0;
-      const shakeY = state.fishBite ? Math.abs(Math.cos(Date.now() / 45)) * 14 : Math.sin(Date.now() / 350) * 3;
+      const now = performance.now();
+      const shakeX = state.fishBite ? Math.sin(now / 35) * 14 : 0;
+      const shakeY = state.fishBite ? Math.abs(Math.cos(now / 35)) * 16 : Math.sin(now / 350) * 3;
 
-      // 1) 코르크 손잡이 & 황금 릴 + 길게 뻗은 카본 낚싯대 (픽셀 계단형 정밀 렌더링)
       const rodStartX = 115;
       const rodStartY = 185;
-      const tipX = 290 + shakeX * 0.4;
-      const tipY = 55 + shakeY * 0.6;
+      const tipX = 295 + shakeX * 0.6;
+      const tipY = 55 + shakeY * 0.8;
 
-      // 코르크 그립
       ctx.fillStyle = '#c68642';
       ctx.fillRect(rodStartX - 8, rodStartY - 8, 28, 18);
       ctx.strokeStyle = '#120d0a';
       ctx.lineWidth = 4;
       ctx.strokeRect(rodStartX - 8, rodStartY - 8, 28, 18);
 
-      // 낚싯대 본체 (픽셀 블록으로 계단식 곡선 표현)
       const steps = 16;
       for (let s = 0; s <= steps; s++) {
         const t = s / steps;
-        // 끝부분이 살짝 휘어지는 포물선 궤적
         const rx = Math.floor(rodStartX + 16 + (tipX - (rodStartX + 16)) * t);
-        const bend = state.fishBite ? t * t * 18 : t * t * 6;
+        const bend = state.fishBite ? t * t * 24 : t * t * 6;
         const ry = Math.floor(rodStartY - 4 + (tipY - (rodStartY - 4)) * t + bend);
         const thickness = s < 5 ? 10 : s < 11 ? 7 : 5;
 
         ctx.fillStyle = '#120d0a';
         ctx.fillRect(rx - 2, ry - 2, thickness + 4, thickness + 4);
-        ctx.fillStyle = s % 4 === 0 ? '#e03131' : '#343a40'; // 마디 포인트
+        ctx.fillStyle = s % 4 === 0 ? '#e03131' : '#343a40';
         ctx.fillRect(rx, ry, thickness, thickness);
 
-        // 가이드 고리 (은색 링)
         if (s === 6 || s === 11 || s === 16) {
           ctx.fillStyle = '#dee2e6';
           ctx.fillRect(rx + 2, ry + thickness, 6, 6);
         }
       }
 
-      // 황금 스피닝 릴
       ctx.fillStyle = '#f59f00';
       ctx.fillRect(rodStartX + 26, rodStartY - 2, 22, 24);
       ctx.fillStyle = '#ffd43b';
@@ -693,35 +922,30 @@ const SPRITES = {
       ctx.lineWidth = 4;
       ctx.strokeRect(rodStartX + 26, rodStartY - 2, 22, 24);
 
-      // 2) 낚싯줄 (입질이 오면 팽팽하게 직선으로 당겨지며 좌우로 떨림)
       const bobX = 355 + shakeX;
       const bobY = (state.fishBite ? 415 : 380) + shakeY;
 
       ctx.strokeStyle = state.fishBite ? '#ffd43b' : '#ffffff';
       ctx.lineWidth = state.fishBite ? 4 : 3;
       ctx.beginPath();
-      ctx.moveTo(tipX + 4, tipY + 12);
+      ctx.moveTo(tipX + 4, tipY + 14);
       if (state.fishBite) {
-        // 입질 시 팽팽하게 일직선으로 당겨짐
         ctx.lineTo(bobX + 12, bobY);
       } else {
-        // 평소에는 살짝 느슨한 곡선
         ctx.quadraticCurveTo(tipX + 25, (tipY + bobY) / 2 + 25, bobX + 12, bobY);
       }
       ctx.stroke();
 
-      // 3) 수면 파동 고리 (입질 시 물보라 파동이 2겹으로 크게 퍼짐)
       ctx.strokeStyle = state.fishBite ? '#ffffff' : '#a5d8ff';
       ctx.lineWidth = 4;
       if (state.fishBite) {
-        const ripple = (Date.now() % 400) / 10;
+        const ripple = (now % 360) / 8;
         ctx.strokeRect(bobX - 24 - ripple * 0.5, bobY + 10, 72 + ripple, 20);
         ctx.strokeRect(bobX - 10, bobY + 14, 44, 12);
       } else {
         ctx.strokeRect(bobX - 14, bobY + 14, 52, 14);
       }
 
-      // 4) 빨간/흰색 투톤 찌 (입질 시 물속으로 반쯤 잠김)
       const submerge = state.fishBite ? 10 : 0;
       ctx.fillStyle = '#e03131';
       ctx.fillRect(bobX, bobY - 6 + submerge, 24, 15);
@@ -732,7 +956,6 @@ const SPRITES = {
       ctx.strokeRect(bobX, bobY - 6 + submerge, 24, 26 - submerge * 0.5);
     }
 
-    // 통발 그래픽
     if (state.trapActive) {
       ctx.fillStyle = '#8d5524';
       ctx.fillRect(70, 500, 96, 64);
