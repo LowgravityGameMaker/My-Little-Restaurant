@@ -1,24 +1,21 @@
-
 const SPRITES = {
-  // 8x8 또는 16x16 도트 매트릭스 팔레트
   palette: {
     '.': null,
-    'K': '#120d0a', // 검정 외곽선
-    'W': '#ffffff', // 흰색
-    'Y': '#ffd43b', // 노랑 (코인/옥수수/병아리)
-    'O': '#f76707', // 주황 (당근/호박/불꽃)
-    'R': '#e03131', // 빨강 (딸기/토마토/책갈피)
-    'G': '#2f9e44', // 초록 (잎사귀/채소)
-    'L': '#8ce99a', // 연두
-    'B': '#1971c2', // 파랑 (물/물고기)
-    'C': '#74c0fc', // 하늘색
-    'N': '#8d5524', // 갈색 (나무/흙/도마)
-    'D': '#4a2c11', // 진갈색
-    'S': '#adb5bd', // 은색 (프라이팬/칼날)
-    'P': '#fcc2d7'  // 분홍 (순무/피부)
+    'K': '#120d0a',
+    'W': '#ffffff',
+    'Y': '#ffd43b',
+    'O': '#f76707',
+    'R': '#e03131',
+    'G': '#2f9e44',
+    'L': '#8ce99a',
+    'B': '#1971c2',
+    'C': '#74c0fc',
+    'N': '#8d5524',
+    'D': '#4a2c11',
+    'S': '#adb5bd',
+    'P': '#fcc2d7'
   },
 
-  // 아이콘 픽셀 맵 (8x8)
   icons: {
     coin: [
       '..KKKK..',
@@ -92,7 +89,6 @@ const SPRITES = {
     ]
   },
 
-  // 지정된 캔버스에 8x8 도트 아이콘 렌더링
   drawIcon(canvas, iconName) {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -112,7 +108,6 @@ const SPRITES = {
     }
   },
 
-  // 새 캔버스 엘리먼트를 만들어 도트 아이콘 반환
   createIconCanvas(iconName, size = 16) {
     const c = document.createElement('canvas');
     c.width = size;
@@ -122,7 +117,6 @@ const SPRITES = {
     return c;
   },
 
-  // 아이템 ID에 맞는 도트 아이콘 이름 매핑
   getIconKeyForItem(itemId) {
     const item = GAME_DATA.items[itemId];
     if (!item) return 'misc';
@@ -132,26 +126,23 @@ const SPRITES = {
     return 'misc';
   },
 
-  // 1. 조리대 배경 및 조리도구(위에서 내려다본 탑뷰) 그리기
   drawKitchen(ctx, w, h, state) {
-    // 나무 조리대 타일 배경
     ctx.fillStyle = '#8d5524';
     ctx.fillRect(0, 0, w, h);
     ctx.fillStyle = '#734218';
-    for (let y = 0; y < h; y += 16) {
-      ctx.fillRect(0, y, w, 2);
+    for (let y = 0; y < h; y += 32) {
+      ctx.fillRect(0, y, w, 4);
     }
 
-    // 상단 화구 및 조리 슬롯 영역
     const tools = state.unlockedTools;
-    const slotW = 48;
-    const slotH = 48;
+    const slotW = 96;
+    const slotH = 96;
     const positions = [
-      { x: 14, y: 20 },
-      { x: 66, y: 20 },
-      { x: 118, y: 20 },
-      { x: 40, y: 80 },
-      { x: 92, y: 80 }
+      { x: 24, y: 30 },
+      { x: 132, y: 30 },
+      { x: 240, y: 30 },
+      { x: 76, y: 165 },
+      { x: 188, y: 165 }
     ];
 
     state.toolSlots = [];
@@ -161,250 +152,232 @@ const SPRITES = {
       if (!pos) return;
       state.toolSlots.push({ toolId, x: pos.x, y: pos.y, w: slotW, h: slotH });
 
-      // 화구/작업대 받침
       ctx.fillStyle = '#2b211a';
       ctx.fillRect(pos.x, pos.y, slotW, slotH);
       ctx.strokeStyle = '#120d0a';
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 4;
       ctx.strokeRect(pos.x, pos.y, slotW, slotH);
 
-      // 도구별 도트 그래픽
       if (toolId === 'tool_pan') {
         ctx.fillStyle = '#495057';
-        ctx.fillRect(pos.x + 10, pos.y + 8, 28, 28);
+        ctx.fillRect(pos.x + 20, pos.y + 16, 56, 56);
         ctx.fillStyle = '#212529';
-        ctx.fillRect(pos.x + 14, pos.y + 12, 20, 20);
-        ctx.fillRect(pos.x + 22, pos.y + 36, 4, 10); // 손잡이
+        ctx.fillRect(pos.x + 28, pos.y + 24, 40, 40);
+        ctx.fillRect(pos.x + 44, pos.y + 72, 8, 20);
       } else if (toolId === 'tool_board') {
         ctx.fillStyle = '#deb887';
-        ctx.fillRect(pos.x + 8, pos.y + 10, 32, 28);
+        ctx.fillRect(pos.x + 16, pos.y + 20, 64, 56);
         ctx.fillStyle = '#adb5bd';
-        ctx.fillRect(pos.x + 26, pos.y + 14, 4, 18); // 칼날
+        ctx.fillRect(pos.x + 52, pos.y + 28, 8, 36);
       } else if (toolId === 'tool_pot') {
         ctx.fillStyle = '#1971c2';
-        ctx.fillRect(pos.x + 10, pos.y + 10, 28, 28);
+        ctx.fillRect(pos.x + 20, pos.y + 20, 56, 56);
         ctx.fillStyle = '#74c0fc';
-        ctx.fillRect(pos.x + 14, pos.y + 14, 20, 20);
+        ctx.fillRect(pos.x + 28, pos.y + 28, 40, 40);
       } else if (toolId === 'tool_juicer') {
         ctx.fillStyle = '#f8f9fa';
-        ctx.fillRect(pos.x + 14, pos.y + 8, 20, 32);
+        ctx.fillRect(pos.x + 28, pos.y + 16, 40, 64);
         ctx.fillStyle = '#ffd43b';
-        ctx.fillRect(pos.x + 18, pos.y + 12, 12, 14);
+        ctx.fillRect(pos.x + 36, pos.y + 24, 24, 28);
       } else if (toolId === 'tool_fryer') {
         ctx.fillStyle = '#868e96';
-        ctx.fillRect(pos.x + 8, pos.y + 8, 32, 32);
+        ctx.fillRect(pos.x + 16, pos.y + 16, 64, 64);
         ctx.fillStyle = '#fcc419';
-        ctx.fillRect(pos.x + 12, pos.y + 12, 24, 24);
+        ctx.fillRect(pos.x + 24, pos.y + 24, 48, 48);
       }
 
-      // 도구 이름 라벨
       ctx.fillStyle = '#fff6e5';
-      ctx.font = '8px monospace';
-      ctx.fillText(GAME_DATA.tools[toolId].name, pos.x + 4, pos.y + slotH + 9);
+      ctx.font = '16px Galmuri9, sans-serif';
+      ctx.fillText(GAME_DATA.tools[toolId].name, pos.x + 4, pos.y + slotH + 20);
 
-      // 현재 도구 안에 들어간 재료 수 표시
       const inItems = state.cookingPotItems[toolId] || [];
       if (inItems.length > 0) {
         ctx.fillStyle = '#ffd43b';
-        ctx.fillRect(pos.x + 34, pos.y + 2, 12, 12);
+        ctx.fillRect(pos.x + 68, pos.y + 4, 24, 24);
         ctx.fillStyle = '#120d0a';
-        ctx.fillText(String(inItems.length), pos.x + 38, pos.y + 11);
+        ctx.font = 'bold 16px Galmuri9, sans-serif';
+        ctx.fillText(String(inItems.length), pos.x + 75, pos.y + 22);
       }
     });
 
-    // 하단 왼쪽: 쓰레기통
-    state.trashRect = { x: 14, y: h - 54, w: 40, h: 42 };
+    state.trashRect = { x: 24, y: h - 105, w: 84, h: 80 };
     ctx.fillStyle = '#495057';
-    ctx.fillRect(14, h - 54, 40, 42);
+    ctx.fillRect(24, h - 105, 84, 80);
     ctx.fillStyle = '#212529';
-    ctx.fillRect(18, h - 46, 32, 30);
+    ctx.fillRect(32, h - 90, 68, 56);
     ctx.fillStyle = '#ffffff';
-    ctx.font = '8px monospace';
-    ctx.fillText('버리기', 20, h - 28);
+    ctx.font = '16px Galmuri9, sans-serif';
+    ctx.fillText('버리기', 42, h - 55);
 
-    // 하단 오른쪽: 조리 실행 버튼
-    state.cookBtnRect = { x: w - 68, y: h - 54, w: 54, h: 42 };
+    state.cookBtnRect = { x: w - 132, y: h - 105, w: 108, h: 80 };
     ctx.fillStyle = '#2f9e44';
-    ctx.fillRect(w - 68, h - 54, 54, 42);
+    ctx.fillRect(w - 132, h - 105, 108, 80);
     ctx.strokeStyle = '#120d0a';
-    ctx.strokeRect(w - 68, h - 54, 54, 42);
+    ctx.lineWidth = 4;
+    ctx.strokeRect(w - 132, h - 105, 108, 80);
     ctx.fillStyle = '#ffffff';
-    ctx.font = '9px monospace';
-    ctx.fillText('요리시작', w - 62, h - 30);
+    ctx.font = 'bold 18px Galmuri9, sans-serif';
+    ctx.fillText('요리시작', w - 116, h - 58);
   },
-  // 2. 식당 홀 (손님 3명 좌석 및 말풍선 요구사항) 그리기
   drawHall(ctx, w, h, state) {
-    // 벽지와 바닥
     ctx.fillStyle = '#e9d8a6';
     ctx.fillRect(0, 0, w, h * 0.55);
     ctx.fillStyle = '#6f4e37';
     ctx.fillRect(0, h * 0.55, w, h * 0.45);
 
-    // 카운터 테이블
     ctx.fillStyle = '#4a2c11';
-    ctx.fillRect(0, h * 0.62, w, 18);
+    ctx.fillRect(0, h * 0.62, w, 36);
 
-    // 손님 슬롯 3개
     state.customerRects = [];
     for (let i = 0; i < 3; i++) {
-      const cx = 18 + i * 54;
-      const cy = 68;
-      state.customerRects.push({ index: i, x: cx - 4, y: cy - 35, w: 46, h: 90 });
+      const cx = 32 + i * 110;
+      const cy = 140;
+      state.customerRects.push({ index: i, x: cx - 10, y: cy - 75, w: 96, h: 180 });
 
       const cust = state.customers[i];
       if (!cust) {
-        // 빈 의자
         ctx.fillStyle = '#3b2d24';
-        ctx.fillRect(cx + 8, cy + 28, 22, 16);
+        ctx.fillRect(cx + 16, cy + 56, 44, 32);
         continue;
       }
 
-      // 도트 손님 캐릭터
       ctx.fillStyle = cust.shirtColor;
-      ctx.fillRect(cx + 6, cy + 20, 26, 26); // 몸통
+      ctx.fillRect(cx + 12, cy + 40, 52, 52);
       ctx.fillStyle = '#fcc2d7';
-      ctx.fillRect(cx + 9, cy + 4, 20, 18);  // 얼굴
+      ctx.fillRect(cx + 18, cy + 8, 40, 36);
       ctx.fillStyle = '#120d0a';
-      ctx.fillRect(cx + 13, cy + 11, 3, 3);  // 왼쪽 눈
-      ctx.fillRect(cx + 22, cy + 11, 3, 3);  // 오른쪽 눈
+      ctx.fillRect(cx + 26, cy + 22, 6, 6);
+      ctx.fillRect(cx + 44, cy + 22, 6, 6);
 
-      // 머리 위 요구사항 말풍선
       ctx.fillStyle = '#ffffff';
-      ctx.fillRect(cx - 4, cy - 32, 46, 24);
+      ctx.fillRect(cx - 10, cy - 68, 96, 48);
       ctx.strokeStyle = '#120d0a';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(cx - 4, cy - 32, 46, 24);
+      ctx.lineWidth = 4;
+      ctx.strokeRect(cx - 10, cy - 68, 96, 48);
 
       ctx.fillStyle = '#120d0a';
-      ctx.font = '8px monospace';
-      ctx.fillText(cust.wantTag, cx + 1, cy - 17);
+      ctx.font = 'bold 17px Galmuri9, sans-serif';
+      ctx.fillText(cust.wantTag, cx + 4, cy - 38);
     }
   },
 
-  // 3. 밭, 닭장, 버섯 그늘 그리기
   drawFarm(ctx, w, h, state) {
-    // 잔디 배경
     ctx.fillStyle = '#40916c';
     ctx.fillRect(0, 0, w, h);
 
-    // 왼쪽: 닭장
-    state.coopRect = { x: 8, y: 20, w: 42, h: 70 };
+    state.coopRect = { x: 16, y: 30, w: 96, h: 140 };
     ctx.fillStyle = '#a47148';
-    ctx.fillRect(8, 20, 42, 70);
+    ctx.fillRect(16, 30, 96, 140);
     ctx.strokeStyle = '#120d0a';
-    ctx.strokeRect(8, 20, 42, 70);
+    ctx.lineWidth = 4;
+    ctx.strokeRect(16, 30, 96, 140);
     ctx.fillStyle = '#ffffff';
-    ctx.font = '8px monospace';
-    ctx.fillText('닭장', 18, 34);
-    ctx.fillText(`닭:${state.chickens}마리`, 11, 50);
+    ctx.font = 'bold 16px Galmuri9, sans-serif';
+    ctx.fillText('닭장', 46, 58);
+    ctx.font = '15px Galmuri9, sans-serif';
+    ctx.fillText(`닭:${state.chickens}마리`, 24, 92);
     ctx.fillStyle = '#ffd43b';
-    ctx.fillText(`알:${state.eggsReady}개`, 13, 66);
+    ctx.fillText(`알:${state.eggsReady}개`, 28, 126);
 
-    // 오른쪽: 버섯 재배 그늘
-    state.mushroomRect = { x: w - 50, y: 20, w: 42, h: 70 };
+    state.mushroomRect = { x: w - 112, y: 30, w: 96, h: 140 };
     ctx.fillStyle = '#2d3a3a';
-    ctx.fillRect(w - 50, 20, 42, 70);
+    ctx.fillRect(w - 112, 30, 96, 140);
     ctx.strokeStyle = '#120d0a';
-    ctx.strokeRect(w - 50, 20, 42, 70);
+    ctx.strokeRect(w - 112, 30, 96, 140);
     ctx.fillStyle = '#e9ecef';
-    ctx.fillText('버섯그늘', w - 47, 34);
-    ctx.fillText(`키트:${state.mushroomKits}`, w - 47, 50);
+    ctx.font = 'bold 16px Galmuri9, sans-serif';
+    ctx.fillText('버섯그늘', w - 98, 58);
+    ctx.font = '15px Galmuri9, sans-serif';
+    ctx.fillText(`키트:${state.mushroomKits}`, w - 98, 92);
     if (state.mushroomsReady > 0) {
       ctx.fillStyle = '#ffd43b';
-      ctx.fillText(`수확:${state.mushroomsReady}`, w - 47, 66);
+      ctx.fillText(`수확:${state.mushroomsReady}`, w - 98, 126);
     }
 
-    // 중앙: 밭 타일 (3x3 또는 확장 시 4x4)
     const gridSize = state.farmExpanded ? 4 : 3;
-    const cellSize = state.farmExpanded ? 26 : 32;
-    const startX = Math.floor((w - gridSize * (cellSize + 4)) / 2);
-    const startY = 105;
+    const cellSize = state.farmExpanded ? 54 : 68;
+    const startX = Math.floor((w - gridSize * (cellSize + 8)) / 2);
+    const startY = 200;
 
     state.farmCellRects = [];
     for (let r = 0; r < gridSize; r++) {
       for (let c = 0; c < gridSize; c++) {
         const idx = r * gridSize + c;
-        const x = startX + c * (cellSize + 4);
-        const y = startY + r * (cellSize + 4);
+        const x = startX + c * (cellSize + 8);
+        const y = startY + r * (cellSize + 8);
         state.farmCellRects.push({ idx, x, y, w: cellSize, h: cellSize });
 
         const plot = state.farmPlots[idx];
         ctx.fillStyle = plot ? '#5c3a21' : '#7f4f24';
         ctx.fillRect(x, y, cellSize, cellSize);
         ctx.strokeStyle = '#120d0a';
+        ctx.lineWidth = 3;
         ctx.strokeRect(x, y, cellSize, cellSize);
 
         if (plot) {
           if (plot.ready) {
-            // 수확 가능 작물 도트
             ctx.fillStyle = '#2f9e44';
-            ctx.fillRect(x + 8, y + 4, cellSize - 16, 6);
+            ctx.fillRect(x + 16, y + 8, cellSize - 32, 12);
             ctx.fillStyle = '#ff6b6b';
-            ctx.fillRect(x + 6, y + 10, cellSize - 12, cellSize - 14);
+            ctx.fillRect(x + 12, y + 20, cellSize - 24, cellSize - 28);
           } else {
-            // 자라는 중인 새싹
             ctx.fillStyle = '#8ce99a';
-            ctx.fillRect(x + cellSize / 2 - 3, y + cellSize / 2 - 3, 6, 6);
+            ctx.fillRect(x + cellSize / 2 - 6, y + cellSize / 2 - 6, 12, 12);
           }
         }
       }
     }
   },
 
-  // 4. 낚시터 그리기
   drawFishing(ctx, w, h, state) {
-    // 하늘과 강물
     ctx.fillStyle = '#74c0fc';
-    ctx.fillRect(0, 0, w, 75);
+    ctx.fillRect(0, 0, w, 150);
     ctx.fillStyle = '#1971c2';
-    ctx.fillRect(0, 75, w, h - 75);
+    ctx.fillRect(0, 150, w, h - 150);
 
-    // 나무 부두
     ctx.fillStyle = '#8d5524';
-    ctx.fillRect(0, 65, 65, 22);
+    ctx.fillRect(0, 130, 130, 44);
 
-    // 낚시 찌 애니메이션
     if (state.isFishing) {
-      const bobY = state.fishBite ? 132 : 125;
+      const bobY = state.fishBite ? 264 : 250;
       ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 3;
       ctx.beginPath();
-      ctx.moveTo(60, 68);
-      ctx.lineTo(105, bobY);
+      ctx.moveTo(120, 136);
+      ctx.lineTo(210, bobY);
       ctx.stroke();
 
       ctx.fillStyle = state.fishBite ? '#ffd43b' : '#e03131';
-      ctx.fillRect(102, bobY, 6, 6);
+      ctx.fillRect(204, bobY, 14, 14);
 
       if (state.fishBite) {
         ctx.fillStyle = '#ffd43b';
-        ctx.font = '10px monospace';
-        ctx.fillText('입질 왔다! 터치!', 65, 110);
+        ctx.font = 'bold 20px Galmuri9, sans-serif';
+        ctx.fillText('입질 왔다! 화면 터치!', 110, 220);
       }
     }
 
-    // 통발 표시
     if (state.trapActive) {
       ctx.fillStyle = '#495057';
-      ctx.fillRect(25, 175, 22, 16);
+      ctx.fillRect(50, 350, 48, 34);
       ctx.fillStyle = state.trapReady ? '#ffd43b' : '#ffffff';
-      ctx.font = '8px monospace';
-      ctx.fillText(state.trapReady ? '통발 완료!' : '통발 대기중', 16, 202);
+      ctx.font = 'bold 16px Galmuri9, sans-serif';
+      ctx.fillText(state.trapReady ? '통발 수확 가능!' : '통발 대기중...', 26, 410);
     }
   },
 
-  // 5. 시장 상단 배너 그리기
   drawMarketBanner(ctx, w, h, season) {
     ctx.fillStyle = '#d4a373';
     ctx.fillRect(0, 0, w, h);
 
-    // 줄무늬 천막 지붕
-    for (let x = 0; x < w; x += 20) {
-      ctx.fillStyle = (x / 20) % 2 === 0 ? '#e03131' : '#fff9db';
-      ctx.fillRect(x, 0, 20, 32);
+    for (let x = 0; x < w; x += 40) {
+      ctx.fillStyle = (x / 40) % 2 === 0 ? '#e03131' : '#fff9db';
+      ctx.fillRect(x, 0, 40, 56);
     }
     ctx.fillStyle = '#120d0a';
-    ctx.font = '10px monospace';
-    ctx.fillText(`[${season} 시장 가판대]`, 45, 58);
-    ctx.fillText('원하는 물품을 터치해 구매하세요', 16, 76);
+    ctx.font = 'bold 20px Galmuri9, sans-serif';
+    ctx.fillText(`[${season} 시장 가판대]`, 92, 98);
+    ctx.font = '15px Galmuri9, sans-serif';
+    ctx.fillText('원하는 물품을 터치해 구매하세요', 66, 130);
   }
 };
