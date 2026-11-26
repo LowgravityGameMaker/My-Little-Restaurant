@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>도트 사계절 식당</title>
-  <link rel="stylesheet" href="style.css?v=7" />
+  <link rel="stylesheet" href="style.css?v=8" />
 </head>
 <body>
   <div id="game-wrapper">
@@ -14,8 +14,11 @@
         <span id="money-text">500 G</span>
       </div>
       <div class="hud-box" id="time-display">
-        <span id="season-day-text">봄 1일차</span>
-        <span id="phase-timer-text">낮 10:00</span>
+        <div id="time-info-col">
+          <span id="season-day-text">봄 1일차</span>
+          <span id="phase-timer-text">낮 10:00</span>
+        </div>
+        <button id="btn-skip-day" class="pixel-btn small accent" title="밤으로 건너뛰기">밤으로</button>
       </div>
       <div id="top-right-icons">
         <button class="icon-btn" id="btn-recipe-book" title="레시피북">
@@ -94,9 +97,9 @@
     </div>
   </div>
 
-  <script src="data.js?v=7"></script>
-  <script src="sprites.js?v=7"></script>
-  <script src="state.js?v=7"></script>
-  <script src="main.js?v=7"></script>
+  <script src="data.js?v=8"></script>
+  <script src="sprites.js?v=8"></script>
+  <script src="state.js?v=8"></script>
+  <script src="main.js?v=8"></script>
 </body>
 </html>
