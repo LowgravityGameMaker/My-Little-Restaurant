@@ -4,8 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>도트 사계절 식당</title>
-  <link rel="stylesheet" href="https://jsdelivr.net" />
-  <link rel="stylesheet" href="style.css?v=3" />
+  <link rel="stylesheet" href="style.css?v=5" />
 </head>
 <body>
   <div id="game-wrapper">
@@ -35,7 +34,9 @@
             <button id="btn-open-ingredients" class="pixel-btn">재료 꺼내기</button>
             <button id="btn-ring-bell" class="pixel-btn accent">서빙 벨</button>
           </div>
-          <canvas id="kitchen-canvas" width="360" height="480"></canvas>
+          <div class="canvas-box">
+            <canvas id="kitchen-canvas" width="540" height="720"></canvas>
+          </div>
           <div id="kitchen-hint">재료를 선택해 조리도구에 넣으세요</div>
         </div>
 
@@ -43,20 +44,26 @@
           <div id="hall-top-controls">
             <button id="btn-back-kitchen" class="pixel-btn">조리대로 돌아가기</button>
           </div>
-          <canvas id="hall-canvas" width="360" height="480"></canvas>
+          <div class="canvas-box">
+            <canvas id="hall-canvas" width="540" height="720"></canvas>
+          </div>
           <div id="serving-tray"></div>
         </div>
       </section>
 
       <section id="scene-farm" class="scene">
-        <canvas id="farm-canvas" width="360" height="520"></canvas>
+        <div class="canvas-box">
+          <canvas id="farm-canvas" width="540" height="720"></canvas>
+        </div>
         <div id="farm-controls" class="bottom-overlay-bar">
           <span id="farm-status-text">밭, 닭장, 버섯 그늘을 터치하세요</span>
         </div>
       </section>
 
       <section id="scene-fishing" class="scene">
-        <canvas id="fishing-canvas" width="360" height="520"></canvas>
+        <div class="canvas-box">
+          <canvas id="fishing-canvas" width="540" height="720"></canvas>
+        </div>
         <div id="fishing-controls" class="bottom-overlay-bar">
           <button id="btn-cast-rod" class="pixel-btn">낚싯대 던지기</button>
           <button id="btn-set-trap" class="pixel-btn">통발 설치/확인</button>
@@ -64,7 +71,7 @@
       </section>
 
       <section id="scene-market" class="scene">
-        <canvas id="market-canvas" width="360" height="160"></canvas>
+        <canvas id="market-canvas" width="540" height="210"></canvas>
         <div id="market-stalls" class="scroll-grid"></div>
       </section>
     </main>
@@ -87,9 +94,9 @@
     </div>
   </div>
 
-  <script src="data.js?v=3"></script>
-  <script src="sprites.js?v=3"></script>
-  <script src="state.js?v=3"></script>
-  <script src="main.js?v=3"></script>
+  <script src="data.js?v=5"></script>
+  <script src="sprites.js?v=5"></script>
+  <script src="state.js?v=5"></script>
+  <script src="main.js?v=5"></script>
 </body>
 </html>
