@@ -64,10 +64,17 @@ canvas {
   font-weight: bold;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 #time-display {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+#time-info-col {
+  display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 11px;
@@ -150,7 +157,6 @@ canvas {
   object-fit: contain;
 }
 
-/* 시장 상단 배너 비율 고정 (찌그러짐 완벽 방지) */
 #market-canvas {
   width: 100%;
   height: auto;
@@ -181,7 +187,7 @@ canvas {
 }
 
 .pixel-btn.small {
-  padding: 3px 7px;
+  padding: 3px 6px;
   font-size: 11px;
 }
 
